@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateManusTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateManusTable extends Migration
      */
     public function up()
     {
-        Schema::create('manus', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->float('price',6,2);
             $table->unsignedInteger('resto_id');
-            $table->unsignedInteger('category_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateManusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manus');
+        Schema::dropIfExists('categories');
     }
 }

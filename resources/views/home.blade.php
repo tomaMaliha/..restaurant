@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                   <manu-container :items = "{{json_encode($categories)}}"></manu-container>
                 </div>
             </div>
         </div>

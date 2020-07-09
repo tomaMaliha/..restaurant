@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manu;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $resto_id = [1];
+        $categories = Manu::whereIn('resto_id' , $resto_id)
+        ->get()
+        ->groupBy('category.name');
+        return view('home' , compact('categories'));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Category;
 
 class ManusTableSeeder extends Seeder
 {
@@ -11,6 +12,13 @@ class ManusTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Manu::class , 10)->create();
+        $categories = factory(Category::class, 5)->create();
+        $categories ->each(function($category)
+        {
+            factory(\App\Models\Manu::class , 3)->create([
+                'category_id' => $category->id,
+            ]);
+        });
+        
     }
 }
