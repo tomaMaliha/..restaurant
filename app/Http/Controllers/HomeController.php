@@ -28,6 +28,7 @@ class HomeController extends Controller
         $categories = Manu::whereIn('resto_id' , $resto_id)
         ->get()
         ->groupBy('category.name');
-        return view('home' , compact('categories'));
+        // return view('home' , compact('categories'));
+        return view('admin.master' , compact('categories'));
     }
 }
