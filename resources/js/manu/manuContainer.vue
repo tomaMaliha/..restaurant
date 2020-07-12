@@ -16,7 +16,9 @@
     		<div class="col-md-4">
     			<card-component>
     				<template slot="title">Add Manu Items</template>
-    				<template slot="body">Manu Items</template>
+    				<template slot="body">
+						<manu-add :categories="categories"></manu-add>
+					</template>
     			</card-component>
     		</div>
     	</div>
@@ -27,10 +29,11 @@
 import _ from 'lodash';
 import Multiselect from 'vue-multiselect';
 import ManuGroup from './manuGroup.vue';
+import ManuAdd from './manuAdd.vue';
 export default {
 	props: ['items'],
 	components: {
-		Multiselect,ManuGroup
+		Multiselect,ManuGroup,ManuAdd
 	},
 	created()
 	{
