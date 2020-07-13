@@ -6,6 +6,8 @@
   <title>Restaurant</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
  </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -82,7 +84,7 @@
     <section class="content">
 
       <!-- Default box -->
-      <manu-container :items = "{{json_encode($categories)}}"></manu-container>
+      <manu-container :items = "{{json_encode($categories)}}" :resto-id="{{$restoId}}"></manu-container>
       <!-- /.card -->
 
     </section>

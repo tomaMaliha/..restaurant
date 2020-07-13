@@ -15,7 +15,8 @@
 
       <div class="form-group">
         <label for="name">Price</label>
-        <input class="form-control" type="number" placeholder="Enter food item price" v-model="food.price">
+        <input class="form-control" type="number" placeholder="Enter food item price" 
+        v-model="food.price">
         
       </div>
 
@@ -35,7 +36,7 @@
 <script>
 import Multiselect from 'vue-multiselect';
 export default {
-    props: ['categories'],
+    props: ['categories' , 'restoId'],
     components:
     {
         Multiselect
@@ -43,19 +44,32 @@ export default {
     data()
     {
         return {
-            food: 
-            {
-                item: '',
-                category: '',
-                price: 100
-            }
+            food: this.emptyFoodItems()
         }
     },
     methods:
     {
+        emptyFoodItems()
+        {
+            return {
+                
+                item: '',
+                category: '',
+                price: 100,
+                description: '',
+            }
+        },
         handleSubmit()
         {
-
+            console.log('form data' , this.food);
+            let postData = this.food;
+            postData.restoId = this.restoId;
+            window.axios.post('api/item/save', postData).then(response => {
+                console.log('response', response.data);
+                this.$emit('newManuItemAdded' , response.data, postData.category);
+                this.food = this.emptyFoodItems();
+            })
+            .catch(error => console.log('error' , error.response));
         }
     }
 }

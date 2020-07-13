@@ -1986,23 +1986,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['categories'],
+  props: ['categories', 'restoId'],
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   data: function data() {
     return {
-      food: {
-        item: '',
-        category: '',
-        price: 100
-      }
+      food: this.emptyFoodItems()
     };
   },
   methods: {
-    handleSubmit: function handleSubmit() {}
+    emptyFoodItems: function emptyFoodItems() {
+      return {
+        item: '',
+        category: '',
+        price: 100,
+        description: ''
+      };
+    },
+    handleSubmit: function handleSubmit() {
+      var _this = this;
+
+      console.log('form data', this.food);
+      var postData = this.food;
+      postData.restoId = this.restoId;
+      window.axios.post('api/item/save', postData).then(function (response) {
+        console.log('response', response.data);
+
+        _this.$emit('newManuItemAdded', response.data, postData.category);
+
+        _this.food = _this.emptyFoodItems();
+      })["catch"](function (error) {
+        return console.log('error', error.response);
+      });
+    }
   }
 });
 
@@ -2050,12 +2070,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['items'],
+  props: ['items', 'restoId'],
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a,
     ManuGroup: _manuGroup_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -2069,16 +2091,24 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     this.manu = this.categories[0];
+    this.localItems = this.items;
   },
   data: function data() {
     return {
+      localItems: '',
       manu: '',
       categories: []
     };
   },
   computed: {
     currentItems: function currentItems() {
-      return this.items[this.manu];
+      return this.localItems[this.manu];
+    }
+  },
+  methods: {
+    handleNewManuItem: function handleNewManuItem(item, category) {
+      console.log('item', item);
+      this.localItems[category].unshift(item);
     }
   }
 });
@@ -38525,7 +38555,10 @@ var render = function() {
                     { staticClass: "section" },
                     [
                       _c("multiselect", {
-                        attrs: { options: _vm.categories },
+                        attrs: {
+                          options: _vm.categories,
+                          "close-on-select": true
+                        },
                         model: {
                           value: _vm.manu,
                           callback: function($$v) {
@@ -38561,7 +38594,15 @@ var render = function() {
               _c(
                 "template",
                 { slot: "body" },
-                [_c("manu-add", { attrs: { categories: _vm.categories } })],
+                [
+                  _c("manu-add", {
+                    attrs: {
+                      categories: _vm.categories,
+                      "resto-id": _vm.restoId
+                    },
+                    on: { newManuItemAdded: _vm.handleNewManuItem }
+                  })
+                ],
                 1
               )
             ],

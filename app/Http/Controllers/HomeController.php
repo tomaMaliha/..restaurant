@@ -25,10 +25,11 @@ class HomeController extends Controller
     public function index()
     {
         $resto_id = [1];
-        $categories = Manu::whereIn('resto_id' , $resto_id)
+        $restoId = 1;
+        $categories = Manu::where('resto_id' , $resto_id)
         ->get()
         ->groupBy('category.name');
         // return view('home' , compact('categories'));
-        return view('admin.master' , compact('categories'));
+        return view('admin.master' , compact('categories', 'restoId'));
     }
 }
