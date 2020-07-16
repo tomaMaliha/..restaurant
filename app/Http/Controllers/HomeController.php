@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         $resto_id = [1];
         $restoId = 1;
-        $categories = Manu::where('resto_id' , $resto_id)
+        $categories = Manu::where('resto_id' , $restoId)
         ->get()
         ->groupBy('category.name');
         // return view('home' , compact('categories'));

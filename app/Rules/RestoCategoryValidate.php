@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Models\Category;
 use Illuminate\Contracts\Validation\Rule;
 
-class RestoCategoryValidation implements Rule
+class RestoCategoryValidate implements Rule
 {
     private $restoId;
 
@@ -16,12 +16,12 @@ class RestoCategoryValidation implements Rule
 
     public function passes($attribute, $value)
     {
-        $conditions = [
-            'resto_id' => $this->restoId,
-            'name' => $value,
-        ];
+        // $conditions = [
+        //     'resto_id' => $this->restoId,
+        //     'name' => $value,
+        // ];
 
-        if (Category::where($conditions)->first()) {
+        if (Category::where('name' , $value)->where('resto_id' , $this->restoId)->first()) {
             return true;
         }
 

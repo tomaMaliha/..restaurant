@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manu;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Rules\RestoCategoriesValidate;
+use App\Rules\RestoCategoryValidate;
 
 class ManuController extends Controller
 {
@@ -16,7 +16,7 @@ class ManuController extends Controller
             'price' => 'required|numeric',
             'item' => 'required',
             'description' => 'required|min:2',
-            'category' => ['required', new RestoCategoriesValidate(request('restoId'))],
+            'category' => ['required', new RestoCategoryValidate(request('restoId'))],
         ]);
 
         $category = Category::where('resto_id' , $postData['restoId'])
