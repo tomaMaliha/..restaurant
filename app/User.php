@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function restaurent()
     {
-        return $this->hasMany(Restaurent::class,'owner_id');
+        return $this->hasMany(Restaurent::class,'owner_id')->orderBy('name' , 'asc');
     }
 }

@@ -20,12 +20,12 @@ class CreateRestaurentsTable extends Migration
             $table->unsignedInteger('owner_id');
             $table->timestamps();
 
-            $table->foreign('owner_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
+            // $table->foreign('owner_id')
+            // ->references('id')
+            // ->on('users')
+            // ->onDelete('cascade');
 
-            $table->index('owner_id');
+            // $table->index('owner_id');
         });
     }
 
